@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>邀请好友</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://download.dl.quzhuan.me/image/redpack/css/reset.css">
+</head>
+<style>
+    html,
+    body {
+        max-width: 420px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: auto;
+    }
+
+    .share-banner {
+        width: 100%;
+        position: relative;
+    }
+
+    .share-banner>img {
+        width: 100%;
+    }
+
+    .share-banner-con {
+        width: 96%;
+        margin-left: 2%;
+        height: 60px;
+        border-radius: 30px;
+        background: #872AA9;
+        position: absolute;
+        bottom: -40px;
+    }
+
+    .share-banner-con img {
+        float: left;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .share-banner-con-list p {
+        font-size: 12px;
+        line-height: 20px;
+        color: #fff;
+        padding-right: 10px;
+    }
+
+    .share-con {
+        margin-top: 40px;
+        width: 100%;
+        overflow: scroll;
+        height: 50%;
+    }
+
+    .share-con-list {
+        width: 96%;
+        height: 50px;
+        margin: 5px 2%;
+        overflow: hidden;
+        border-bottom: 1px solid #eee;
+    }
+
+    .share-con-list img:nth-child(1) {
+        float: left;
+        width: 30px;
+        height: 30px;
+        margin: 10px;
+        border-radius: 50%;
+    }
+
+    .share-con-list div {
+        float: left;
+    }
+
+    .share-con-list div p {
+        line-height: 25px;
+    }
+
+    .share-con-list img:nth-child(3) {
+        float: right;
+        width: 32px;
+        height: 24px;
+        margin: 13px;
+    }
+
+    .share-footer {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        bottom: 0px;
+        background: #ffffff;
+    }
+
+    .share-footer img {
+        width: 60%;
+        margin-left: 20%;
+    }
+
+    .layer {
+        width: 60%;
+        line-height: 24px;
+        padding: 0 2%;
+        word-break: break-word;
+        margin-left: 18%;
+        background: rgba(0, 0, 0, .7);
+        color: #fff;
+        border-radius: 5px;
+        position: fixed;
+        top: 50%;
+    }
+</style>
+
+<body>
+    <div class="share-banner">
+        <img src="http://download.dl.quzhuan.me/image/redpack/img/share-banner.jpg" alt="">
+        <div class="share-banner-con">
+            <img src="" alt="" id="userHeadUrl">
+            <div class="share-banner-con-list">
+                <p style="color: #FFCB38;" id="userName"></p>
+                <p>我已经在红包多抢到了超多福利!我身边的人都在玩!现在马上加入领现金红包!</p>
+            </div>
+        </div>
+    </div>
+    <div class="share-con">
+        <ul id="list">
+        </ul>
+    </div>
+    <div class="share-footer" id="footer1">
+        <img src="http://download.dl.quzhuan.me/image/redpack/img/share-anniu.png" onclick="post()" alt="">
+    </div>
+    <div class="share-footer" style="display:none;" id="footer2">
+        <img src="http://download.dl.quzhuan.me/image/redpack/img/share-down.png" onclick="down()" alt="">
+    </div>
+    <p id="layer" class="layer"></p>
+</body>
+<script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var href = window.location.href;
+    var outToken = href.substring(href.indexOf('&') + 7, href.indexOf('+'));
+    var code = href.substring(href.indexOf('code') + 5, href.indexOf('&'));
+    var id = href.substr(href.indexOf('+') + 1);
+    console.log(outToken);
+    console.log(code);
+    console.log(id);
+
+    function getDate(token) {
+        $.post('http://service.hongbao.quzhuan.net.cn/app/api/v1/user/get/user', {
+            token: token
+        }, function(res) {
+            console.log(res);
+            if (res.data.user.headUrl === null || res.data.user.headUrl === '') {
+                console.log(1);
+                res.data.user.headUrl = 'http://download.dl.quzhuan.me/image/redpack/img/duoduo.png';
+            };
+            $('#userHeadUrl').attr('src', res.data.user.headUrl);
+            $('#userName').text(res.data.user.name);
+        });
+    };
+    getDate(outToken);
+
+    function getList(token) {
+        $.post('http://service.hongbao.quzhuan.net.cn/app/api/v1/index/roll/list', {
+            token: token
+        }, function(res) {
+            console.log(res);
+            var i = 0;
+            if (res.data.list[i].icon === null) {
+                res.data.list[i].icon = 'http://download.dl.quzhuan.me/image/redpack/img/duoduo.png';
+            };
+            var html = '<li class="share-con-list" style="display:none;">\
+            <img src="' + res.data.list[i].icon + '" alt="">\
+            <div>\
+            <p style="color:#d43047;">' + res.data.list[i].userName +
+                '</p>\
+            <p>' + res.data.list[i].description + '</p>\
+            </div>\
+            <img src="http://download.dl.quzhuan.me/image/redpack/img/share-O.png" alt="">\
+            </li>';
+            $('#list').prepend(html);
+            $('#list').children().first().slideDown("500");
+            var t = setInterval(function() {
+                i++;
+                if (i >= 30) {
+                    i = 0;
+                } else {
+                    if (res.data.list[i].icon === null || res.data.list[i].icon === '') {
+                        res.data.list[i].icon = 'http://download.dl.quzhuan.me/image/redpack/img/duoduo.png';
+                    };
+                    var html = '<li class="share-con-list" style="display:none;">\
+                    <img src="' + res.data.list[i].icon + '" alt="">\
+                    <div>\
+                    <p style="color:#d43047;">' + res
+                        .data.list[i].userName + '</p>\
+                    <p>' + res.data.list[i].description +
+                        '</p>\
+                    </div>\
+                    <img src="http://download.dl.quzhuan.me/image/redpack/img/share-O.png" alt="">\
+                    </li>';
+                    $('#list').prepend(html);
+                    $('#list').children().first().slideDown("500");
+                };
+            }, 1500);
+        })
+    };
+    getList(outToken);
+
+    function post() {
+        $.post('http://service.hongbao.quzhuan.net.cn/app/api/v1/user/login/wechat/invite', {
+            code: code,
+            friendUserId: id
+        }, function(res) {
+            if (res.code === -1039) {
+                layer(res.msg);
+            } else {
+                layer('您已激活账号，请下载登录app，获取奖励。');
+            };
+            $('#footer1').css('display', 'none');
+            $('#footer2').css('display', 'block');
+        });
+    };
+
+    function down() {
+        var ua = navigator.userAgent.toLowerCase();
+        var isAndroid = /android/.test(ua);
+        var isiOS = /iphone|ipad|ipod/.test(ua);
+        if (isiOS) {
+            window.location.href = "https://itunes.apple.com/cn/app/%E7%BA%A2%E5%8C%85%E5%A4%9A/id1223246153?mt=8";
+        };
+        if (isAndroid) {
+            window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.quzhuan.packet";
+        };
+    };
+
+    function layer(tishi) {
+        $('#layer').text(tishi);
+        $('#layer').finish().fadeIn(500).delay(3000).fadeOut(500);
+    }
+</script>
+
+</html>

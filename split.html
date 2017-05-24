@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>分裂红包</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://download.dl.quzhuan.me/image/redpack/css/reset.css">
+</head>
+<style>
+    html,
+    body {
+        max-width: 420px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: auto;
+        background: url('http://download.dl.quzhuan.me/image/redpack/img/share-bg.png') no-repeat;
+        background-size: 100%;
+    }
+
+    .split-banner {
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 20px;
+    }
+
+    .split-banner img {
+        width: 50px;
+        height: 50px;
+        float: left;
+        margin: 5px;
+    }
+
+    .split-banner span {
+        float: left;
+        line-height: 60px;
+        color: #000;
+        margin-left: 5px;
+        font-size: 18px;
+    }
+
+    .split-banner p {
+        clear: both;
+        color: #000;
+    }
+
+    .split-con1 {
+        background: url('http://download.dl.quzhuan.me/image/redpack/img/share-hongbao.png') no-repeat;
+        background-size: contain;
+        width: 80%;
+        height: 70%;
+        position: absolute;
+        top: 25%;
+        left: 10%;
+        border-radius: 5px;
+    }
+
+    .split-open {
+        width: 90px;
+        height: 90px;
+        background: url('http://download.dl.quzhuan.me/image/redpack/img/qiandao-open.png') no-repeat;
+        background-size: 90px;
+        margin: 80% auto 0;
+    }
+
+    .split-con2 {
+        background: url('http://download.dl.quzhuan.me/image/redpack/img/qiandao-redBg2.png') no-repeat;
+        background-size: contain;
+        width: 80%;
+        height: 70%;
+        position: absolute;
+        top: 25%;
+        left: 10%;
+        border-radius: 5px;
+    }
+
+    .split-con2-con1 p:nth-child(1) {
+        margin-top: 68%;
+        text-align: center;
+        font-size: 18px;
+        color: #D43047;
+    }
+
+    .split-con2 p:nth-child(3) {
+        margin-top: 20%;
+        text-align: center;
+        color: #4cc2ea;
+    }
+
+    .split-con2 div:nth-child(4) {
+        width: 60%;
+        height: 40px;
+        line-height: 40px;
+        background: #D43047;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        margin-left: 20%;
+    }
+
+    .split-con2-con2 {
+        width: 80%;
+        margin-top: 70%;
+        margin-left: 10%;
+        color: #D43047;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .split-con3 {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: auto;
+        background: rgba(0, 0, 0, .6);
+    }
+
+    .split-con3-con {
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 80%;
+        height: 70%;
+        position: absolute;
+        top: 25%;
+        left: 10%;
+        border-radius: 5px;
+    }
+
+    .split-con3-con img {
+        border-radius: 5px;
+        width: 50px;
+        height: 50px;
+        margin: 10px 20px;
+        float: left;
+    }
+
+    .split-con3-con span:nth-child(2) {
+        float: left;
+        line-height: 70px;
+        color: #fff;
+        font-size: 16px;
+    }
+
+    .split-con3-con span:nth-child(3) {
+        background: url('http://download.dl.quzhuan.me/image/redpack/img/qiandao-quxiao.png') no-repeat;
+        background-size: 36px;
+        display: block;
+        width: 36px;
+        height: 36px;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+    }
+
+    .split-code {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+        background: rgba(0, 0, 0, .6);
+    }
+
+    .split-code input {
+        float: left;
+        width: 120px;
+        height: 40px;
+        line-height: 40px;
+        margin: 0 0 0 54px;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        text-indent: 5px;
+        background: rgba(0, 0, 0, 0);
+        color: #fff;
+    }
+
+    .split-code input::-webkit-input-placeholder {
+        color: #fff;
+    }
+
+    .split-code input::-moz-placeholder {
+        color: #fff;
+    }
+
+    .split-code input::-ms-placeholder {
+        color: #fff;
+    }
+
+    .split-code img {
+        margin-left: 54px;
+        width: 120px;
+        height: 40px;
+        vertical-align: middle;
+    }
+
+    .split-code span {
+        display: inline-block;
+        width: 72px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        color: #000;
+        background: #fff;
+        position: relative;
+        left: -3px;
+        vertical-align: middle;
+    }
+
+    .split-code-con {
+        width: 300px;
+        height: 300px;
+        background: url('http://download.dl.quzhuan.me/image/redpack/img/sign-codeBg.png') no-repeat center top;
+        background-size: 100%;
+        position: absolute;
+        bottom: 20%;
+        left: 50%;
+        margin-left: -150px;
+        border-radius: 5px;
+    }
+
+    .split-code>div>div:nth-child(1) {
+        width: 35px;
+        height: 35px;
+        background: url('http://download.dl.quzhuan.me/image/redpack/img/qiandao-quxiao.png') no-repeat;
+        background-size: 35px;
+        position: absolute;
+        top: -13px;
+        right: -13px;
+    }
+
+    .split-code>div>p {
+        text-align: center;
+        font-size: 16px;
+        color: #D43047;
+        height: 50px;
+        line-height: 50px;
+        margin-top: 120px;
+    }
+
+    .split-code>div>div:nth-child(5) div {
+        float: left;
+        width: 70px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 14px;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        color: #fff;
+    }
+
+    .rotate {
+        animation: rotate 2s infinite linear;
+        -webkit-animation: rotate 2s 1 linear;
+        -moz-animation: rotate 2s 1 linear;
+        -ms-animation: rotate 2s 1 linear;
+        -o-animation: rotate 2s 1 linear;
+    }
+
+    @keyframes rotate {
+        from {
+            transform: rotateY(0deg);
+            -webkit-transform: rotateY(0deg);
+            -moz-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            -o-transform: rotateY(0deg);
+        }
+        to {
+            transform: rotateY(360deg);
+            -webkit-transform: rotateY(360deg);
+            -moz-transform: rotateY(360deg);
+            -ms-transform: rotateY(360deg);
+            -o-transform: rotateY(360deg);
+        }
+    }
+
+    @-webkit-keyframes rotate {
+        from {
+            transform: rotateY(0deg);
+            -webkit-transform: rotateY(0deg);
+            -moz-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            -o-transform: rotateY(0deg);
+        }
+        to {
+            transform: rotateY(360deg);
+            -webkit-transform: rotateY(360deg);
+            -moz-transform: rotateY(360deg);
+            -ms-transform: rotateY(360deg);
+            -o-transform: rotateY(360deg);
+        }
+    }
+
+    @-moz-keyframes rotate {
+        from {
+            transform: rotateY(0deg);
+            -webkit-transform: rotateY(0deg);
+            -moz-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            -o-transform: rotateY(0deg);
+        }
+        to {
+            transform: rotateY(360deg);
+            -webkit-transform: rotateY(360deg);
+            -moz-transform: rotateY(360deg);
+            -ms-transform: rotateY(360deg);
+            -o-transform: rotateY(360deg);
+        }
+    }
+
+    @-ms-keyframes rotate {
+        from {
+            transform: rotateY(0deg);
+            -webkit-transform: rotateY(0deg);
+            -moz-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            -o-transform: rotateY(0deg);
+        }
+        to {
+            transform: rotateY(360deg);
+            -webkit-transform: rotateY(360deg);
+            -moz-transform: rotateY(360deg);
+            -ms-transform: rotateY(360deg);
+            -o-transform: rotateY(360deg);
+        }
+    }
+
+    @-o-keyframes rotate {
+        from {
+            transform: rotateY(0deg);
+            -webkit-transform: rotateY(0deg);
+            -moz-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            -o-transform: rotateY(0deg);
+        }
+        to {
+            transform: rotateY(360deg);
+            -webkit-transform: rotateY(360deg);
+            -moz-transform: rotateY(360deg);
+            -ms-transform: rotateY(360deg);
+            -o-transform: rotateY(360deg);
+        }
+    }
+
+    .layer {
+        width: 100px;
+        background: rgba(0, 0, 0, .6);
+        border-radius: 5px;
+        color: #fff;
+        text-align: center;
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        margin-left: -50px;
+        display: none;
+    }
+</style>
+
+<body>
+    <div class="split-banner">
+        <img src="http://download.dl.quzhuan.me/image/redpack/img/duoduo.png" id="userHeadUrl" alt="">
+        <span id="userName"></span>
+        <p>我把巨额现金塞进红包里，小伙伴们快来领取试试手气吧！</p>
+    </div>
+    <div class="split-con1">
+        <div class="split-open"></div>
+    </div>
+    <div class="split-con2" style="display:none;">
+        <div class="split-con2-con1" style="display:none;">
+            <p>恭喜您获得<span id="result" style="font-size:32px;margin: 0 5px;"></span>元现金</p>
+        </div>
+        <div class="split-con2-con2" style="display:none;">
+            <p>对不起，您已领取过分裂红包</p>
+            <p>下载App，抢更多红包</p>
+        </div>
+        <p>点击下载APP，马上提取现金</p>
+        <div onclick="download()">下载红包多APP</div>
+    </div>
+  <!--   <div class="split-con3">
+      <div id="appBg" onclick="skip()" class="split-con3-con">
+          <img id="appIcon" src="" alt="">
+          <span id="appName"></span>
+          <span onclick="result(event)"></span>
+      </div>
+  </div> -->
+    <div class="split-code" style="display:none;">
+        <div class="split-code-con">
+            <div onclick="cancel()"></div>
+            <p></p>
+            <img id="img" src="" />
+            <span onclick="getCode()">换一张</span>
+            <div style="margin-top:10px;">
+              <input id="code" type="text" placeholder="请输入验证码">
+              <div onclick="post()">发送</div>
+            </div>
+        </div>
+    </div>
+    <div class="layer">验证码错误</div>
+</body>
+<script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var href = window.location.href;
+    var outToken = href.substring(href.indexOf('&') + 7, href.indexOf('+'));
+    var code = href.substring(href.indexOf('code') + 5, href.indexOf('&'));
+    var id = href.substr(href.indexOf('+') + 1);
+    console.log(outToken);
+    console.log(code);
+    console.log(id);
+
+    function getDate(token) {
+        $.post('http://service.hongbao.quzhuan.net.cn/app/api/v1/user/get/user', {
+            token: token
+        }, function(res) {
+            $('#userHeadUrl').attr('src', res.data.user.headUrl);
+            $('#userName').text(res.data.user.name);
+        });
+    };
+    getDate(outToken);
+
+    function getCode() {
+        $.get('http://service.hongbao.quzhuan.net.cn/app/api/v1/message/validateCode', {}, function(res) {
+            img = 'data:image/png;base64,' + res.data.file;
+            file = res.data.validateCode;
+            $('#img').attr('src', img);
+        });
+        $.post('http://service.hongbao.quzhuan.net.cn/app/api/v1/user/login/wechat', {
+            code: code
+        }, function(res) {
+            token = res.data.token;
+        })
+    };
+    getCode();
+    $('.split-open').click(function() {
+        $('.split-code').fadeIn(300);
+    });
+
+    function post() {
+        $.post('http://service.hongbao.quzhuan.net.cn/app/api/v1/redPack/split/red/packet', {
+            token: token,
+            userRedPacketId: id,
+            code: $('#code').val(),
+            fileName: file
+        }, function(res) {
+            if (res.code === -1049 || res.code === -1048) {
+                $('.split-code').fadeOut(300);
+                $('.split-con2-con2').html('<p>' + res.msg + '</p>');
+                $('.split-open').addClass('rotate');
+                setTimeout(function() {
+                    $('.split-con2').fadeIn(300);
+                    $('.split-con2-con2').fadeIn(300);
+                }, 2000);
+            } else if (res.code === 0) {
+                // $('#appName').text(res.data.vo.appName);
+                // $('#appIcon').attr('src', res.data.vo.icon);
+                // $('#appBg').css('background-image', 'url(' + res.data.vo.backUrl + ')');
+                // downLoadUrl = res.data.vo.downLoadUrl;
+                $('.split-code').fadeOut(300);
+                $('#result').text(res.data.vo.award);
+                $('.split-open').addClass('rotate');
+                setTimeout(function() {
+                    $('.split-con2').fadeIn(300);
+                    $('.split-con2-con1').fadeIn(300);
+                }, 2000);
+            } else if (res.code === -1034 || res.code === -1047) {
+                $.get('http://service.hongbao.quzhuan.net.cn/app/api/v1/message/validateCode', {}, function(res) {
+                    img = 'data:image/png;base64,' + res.data.file;
+                    file = res.data.validateCode;
+                    $('#img').attr('src', img);
+                });
+                $('.layer').text(res.msg);
+                $('.layer').fadeIn(500).delay(1000).fadeOut(500);
+            }
+            console.log(res);
+        });
+    };
+
+    function cancel() {
+        $('.split-code').fadeOut(300);
+    };
+
+    function download() {
+      var ua = navigator.userAgent.toLowerCase();
+      var isAndroid = /android/.test(ua);
+      var isiOS = /iphone|ipad|ipod/.test(ua);
+      if(isiOS){
+          window.location.href="https://itunes.apple.com/cn/app/%E7%BA%A2%E5%8C%85%E5%A4%9A/id1223246153?mt=8";
+      }
+      if(isAndroid){
+          window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.quzhuan.packet";
+      }
+    };
+
+    // function skip(event) {
+    //     $.post('http://service.hongbao.quzhuan.net.cn/app/api/v1/log/app/click', {
+    //         token: token,
+    //         userRedPacketId: id
+    //     }, function(res) {});
+    //     window.location.href = 'http://' + downLoadUrl;
+    // };
+    //
+    // function result(event) {
+    //     event.stopPropagation();
+    //     $('.split-con3').fadeOut(300);
+    //     $('.split-con2').fadeIn(300);
+    //     $('.split-con2-con1').fadeIn(300);
+    // };
+</script>
+
+</html>
